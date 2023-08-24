@@ -17,7 +17,7 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
-  // Get hostname of request (e.g. demo.geotag.club, demo.localhost:3000)
+  // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
   const hostname = req.headers
     .get("host")!
     .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
@@ -39,8 +39,8 @@ export default async function middleware(req: NextRequest) {
   }
 
 
-  // special case for `geotag.club` domain
-  if (hostname === "geotag.club") {
+  // special case for `vercel.pub` domain
+  if (hostname === "vercel.pub") {
     return NextResponse.redirect(
       "https://vercel.com/blog/platforms-starter-kit",
     );
