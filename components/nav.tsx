@@ -41,7 +41,7 @@ const externalLinks = [
   },
   {
     name: "View demo site",
-    href: "https://demo.vercel.pub",
+    href: "https://demo.geotag.club",
     icon: <Layout width={18} />,
   },
   {
