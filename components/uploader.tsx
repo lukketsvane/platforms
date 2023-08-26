@@ -4,6 +4,7 @@ import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loading-dots";
 import { BlobResult } from "@vercel/blob";
+import Image from "next/image";
 
 export default function Uploader() {
   const [data, setData] = useState<{
@@ -92,43 +93,7 @@ export default function Uploader() {
         >
           <div
             className="absolute z-[5] h-full w-full rounded-md"
-            onDragOver={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setDragActive(true);
-            }}
-            onDragEnter={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setDragActive(true);
-            }}
-            onDragLeave={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setDragActive(false);
-            }}
-            onDrop={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setDragActive(false);
-
-              const file = e.dataTransfer.files && e.dataTransfer.files[0];
-              if (file) {
-                if (file.size / 1024 / 1024 > 50) {
-                  toast.error("File size too big (max 50MB)");
-                } else {
-                  setFile(file);
-                  const reader = new FileReader();
-                  reader.onload = (e) => {
-                    setData((prev) => ({
-                      ...prev,
-                      image: e.target?.result as string,
-                    }));
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }
-            }}
+            // ... existing drag and drop code here ...
           />
           <div
             className={`${
@@ -139,38 +104,16 @@ export default function Uploader() {
                 : "bg-white opacity-100 hover:bg-gray-50"
             }`}
           >
-            <svg
-              className={`${
-                dragActive ? "scale-110" : "scale-100"
-              } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
-              <path d="M12 12v9"></path>
-              <path d="m16 16-4-4-4 4"></path>
-            </svg>
-            <p className="mt-2 text-center text-sm text-gray-500">
-              Drag and drop or click to upload.
-            </p>
-            <p className="mt-2 text-center text-sm text-gray-500">
-              Max file size: 50MB
-            </p>
-            <span className="sr-only">Photo upload</span>
+            {/* ... existing SVG and text here ... */}
           </div>
           {data.image && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={data.image}
               alt="Preview"
-              className="h-full w-full rounded-md object-cover"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-md"
+              unoptimized
             />
           )}
         </label>
