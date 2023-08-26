@@ -6,7 +6,7 @@ module.exports = {
     serverActions: true,
   },
   images: {
-    domains: [],
+    domains: ['geotag.club', '*.geotag.club'],
   },
   reactStrictMode: false,
 };
